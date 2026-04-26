@@ -15,7 +15,7 @@ class ReturnRequest(BaseModel):
 
 app = FastAPI()
 
-# Fake database
+
 books: Dict[int, Dict] = {
     1: {"title": "Things Fall Apart", "author": "Chinua Achebe", "category": "Fiction", "available": True},
     2: {"title": "Python Basics", "author": "John Doe", "category": "Education", "available": True},
@@ -23,7 +23,7 @@ books: Dict[int, Dict] = {
 
 borrowed_books: Dict[int, Dict] = {}
 
-# ✅ HOME ROUTE
+
 @app.get("/")
 async def home() -> Dict[str, str]:
     return {"message": "Library API is running"}
@@ -33,7 +33,7 @@ async def home() -> Dict[str, str]:
 async def get_books() -> List[Dict]:
     return list(books.values())
 
-# ✅ SEARCH BOOKS
+
 @app.get("/books/search")
 async def search_books(title: str = "", author: str = "", category: str = "") -> List[Dict]:
     results = []
@@ -44,7 +44,7 @@ async def search_books(title: str = "", author: str = "", category: str = "") ->
             results.append(book)
     return results
 
-# ✅ BORROW BOOK (POST)
+
 @app.post("/borrow")
 async def borrow_book(data: BorrowRequest) -> Dict:
     await asyncio.sleep(1)
@@ -91,7 +91,7 @@ async def return_book(data: ReturnRequest) -> Dict:
         "fine": fine
     }
 
-# ✅ CHECK OVERDUE
+
 @app.get("/overdue")
 async def check_overdue(user_id: int) -> List[Dict]:
     results = []
